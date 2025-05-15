@@ -1,0 +1,13 @@
+[Ll]ibrary/
+[Tt]emp/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+obj/
+MemoryCaptures/
+ProjectSettings/UnityConnectSettings.asset
+UserSettings/
+*.csproj
+*.sln
+*.user
+.vscode/
