@@ -22,6 +22,7 @@ public class PlayerShoot : MonoBehaviour
     void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        //bullet.transform.Rotate(90f, 0f, 0f);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
