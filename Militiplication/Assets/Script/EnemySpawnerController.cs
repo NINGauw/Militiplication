@@ -1,33 +1,37 @@
+using System;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;       // Prefab của enemy bạn muốn spawn
-    public float spawnInterval = 2f;     // Khoảng thời gian giữa mỗi lần spawn (giây)
-    public int enemiesPerSpawn = 1;      // Số lượng quái spawn mỗi lần
-    public Transform[] spawnPoints;      // Danh sách vị trí spawn
+    public GameObject enemyPrefab;
+    public float spawnInterval = 2f;
+    public int totalEnemiesToSpawn;
 
-    private float spawnTimer;
+    private float spawnTimer = 0f;
 
+    void Start()
+    {
+        totalEnemiesToSpawn = GameManager.Instance.totalEnemies;
+    }
     void Update()
     {
-        spawnTimer += Time.deltaTime;
-
-        if (spawnTimer >= spawnInterval)
+        if (totalEnemiesToSpawn > 0)
         {
-            SpawnEnemies();
-            spawnTimer = 0f;
+            spawnTimer += Time.deltaTime;
+
+            if (spawnTimer >= spawnInterval)
+            {
+                SpawnEnemy();
+                spawnTimer = 0f;
+            }
         }
     }
 
-    void SpawnEnemies()
+    void SpawnEnemy()
     {
-        for (int i = 0; i < enemiesPerSpawn; i++)
-        {
-            // Lấy vị trí spawn ngẫu nhiên trong mảng
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        Instantiate(enemyPrefab, transform.position, transform.rotation);
+        totalEnemiesToSpawn--;
 
-            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-        }
+        GameManager.Instance.OnEnemySpawned();
     }
 }

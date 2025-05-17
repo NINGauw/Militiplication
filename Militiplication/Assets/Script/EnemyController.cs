@@ -15,29 +15,29 @@ public class EnemyController : MonoBehaviour
     {
         if (!isDead)
         {
-            transform.Translate(transform.forward * moveSpeed * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         }
     }
 
     private void OnTriggerEnter(Collider other)
-{
-    if (isDead) return;
-
-    if (other.CompareTag("Bullet"))
     {
-          Debug.Log("Enemy trigger entered by: " + other.gameObject.name);
-        isDead = true;
+        if (isDead) return;
 
-        if (animator != null)
+        if (other.CompareTag("Bullet"))
         {
-            animator.SetTrigger("Death");
+            isDead = true;
+
+            if (animator != null)
+            {
+                animator.SetTrigger("Death");
+            }
+
+            GameManager.Instance.OnEnemyDefeated();
+
+            Collider col = GetComponent<Collider>();
+            if (col != null) col.enabled = false;
+
+            Destroy(gameObject, 2f);
         }
-
-        Collider col = GetComponent<Collider>();
-        if (col != null) col.enabled = false;
-
-        Destroy(gameObject, 2f);
     }
-}
-
 }

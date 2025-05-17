@@ -21,13 +21,12 @@ public class GoalLine : MonoBehaviour
 
             // Hủy quái
             Destroy(other.gameObject);
+            GameManager.Instance.OnEnemyDefeated();
 
-            Debug.Log($"Goal bị quái tấn công! Máu còn lại: {health}");
             UpdateHealthUI();
 
             if (health <= 0)
             {
-                Debug.Log("Vạch đã bị phá hủy!");
                 // Xử lý Game Over hoặc hiệu ứng
                 // Destroy(gameObject); // nếu muốn xóa vạch
             }
