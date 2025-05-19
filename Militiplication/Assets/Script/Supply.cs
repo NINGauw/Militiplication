@@ -40,6 +40,6 @@ public class SupplyHealth : MonoBehaviour
     }
 
     private void ActiveSupply(){
-        null;
+        
     }
 }
