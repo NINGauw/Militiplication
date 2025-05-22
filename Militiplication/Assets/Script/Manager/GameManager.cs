@@ -34,12 +34,9 @@ public class GameManager : MonoBehaviour
 
         if (enemiesRemaining <= 0)
         {
-            // Kiểm tra nếu không còn enemy nào trên map
-            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
-            {
-                Debug.Log("🎉 You Win!");
-                // Thêm UI hoặc chuyển màn tại đây nếu cần
-            }
+            Debug.Log("🎉 You Win!");
+            WinUIManager.Instance.TriggerWin();
+            CoinManager.Instance.AddCoins(5);
         }
     }
 
