@@ -27,7 +27,6 @@ public class SupplyHealth : MonoBehaviour
         if (other.CompareTag("Bullet"))
         {
             currentHealth = Mathf.Max(0, currentHealth - 1);
-            UpdateHealthText();
 
             Destroy(other.gameObject); // Hủy đạn
 
@@ -35,11 +34,14 @@ public class SupplyHealth : MonoBehaviour
             {
                 Debug.Log("Supply destroyed!");
                 ActiveSupply();
+                currentHealth = maxHealth;
             }
+            UpdateHealthText();
         }
     }
 
     private void ActiveSupply(){
-        
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        SupplierManager.Instance.ActivateSelectedReward(player);
     }
 }

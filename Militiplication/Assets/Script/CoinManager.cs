@@ -14,7 +14,7 @@ public class CoinManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Nếu bạn muốn giữ giữa scene
+            DontDestroyOnLoad(gameObject);
         }
         else
         {

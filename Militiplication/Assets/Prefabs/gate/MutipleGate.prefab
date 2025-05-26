@@ -508,7 +508,7 @@ MonoBehaviour:
   value: 1
   bulletPrefab: {fileID: 4597289192330965671, guid: b0fe8117c5f7a2b44b14307a67778dc4,
     type: 3}
-  bulletSpeed: 30
+  bulletSpeed: 20
 --- !u!1 &8879925737530880764
 GameObject:
   m_ObjectHideFlags: 0

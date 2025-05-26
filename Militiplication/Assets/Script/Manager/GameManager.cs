@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     public void OnEnemySpawned()
     {
-        // Gọi nếu bạn muốn cập nhật số lượng spawn còn lại (nếu cần)
+       
     }
 
     public void OnEnemyDefeated()

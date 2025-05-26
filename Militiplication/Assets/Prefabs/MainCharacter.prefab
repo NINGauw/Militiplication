@@ -2614,7 +2614,7 @@ GameObject:
   - component: {fileID: 5773978465661230922}
   m_Layer: 0
   m_Name: MainCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2715,6 +2715,7 @@ MonoBehaviour:
     type: 3}
   firePoint: {fileID: 4236064168007353024}
   bulletSpeed: 10
+  fireRate: 0.5
   shootInterval: 1
 --- !u!1 &8325739658225178135
 GameObject:
