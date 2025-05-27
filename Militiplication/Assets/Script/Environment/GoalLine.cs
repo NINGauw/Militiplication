@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GoalLine : MonoBehaviour
 {
     public int health = 5; // Số máu ban đầu
-    public TextMeshProUGUI healthText; // (tùy chọn) Text hiển thị máu, gắn từ Inspector
+    public TextMeshProUGUI healthText; // Text hiển thị máu, gắn từ Inspector
 
     void Start()
     {
@@ -21,8 +21,14 @@ public class GoalLine : MonoBehaviour
 
             // Hủy quái
             Destroy(other.gameObject);
-            GameManager.Instance.OnEnemyDefeated();
-
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnEnemyDefeated();
+            }
+            if (EnemyManager.Instance != null)
+                {
+                    EnemyManager.Instance.OnEnemyDefeated();
+                }
             UpdateHealthUI();
 
             if (health <= 0)
@@ -62,6 +68,6 @@ public class GoalLine : MonoBehaviour
         }
     }
     private void Lose() {
-        //xu ly khi thua
+        LoseUIManager.Instance.TriggerLose();
     }
 }

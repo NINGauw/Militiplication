@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     void OnStartGameClicked()
     {
         // Load scene chơi game
-        SceneManager.LoadScene("Stage 1");
+        SceneManager.LoadScene("LevelSelectScene");
     }
 
     void OnSettingClicked()
