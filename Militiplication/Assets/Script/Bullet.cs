@@ -12,9 +12,13 @@ public class BulletController : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-          if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(gameObject); // Hủy đạn khi va chạm enemy
+        }
+        if (collision.gameObject.CompareTag("SpawnedEnemy"))
+        {
+            Destroy(gameObject); // Hủy đạn khi va chạm spawned enemy
         }
     }
 }

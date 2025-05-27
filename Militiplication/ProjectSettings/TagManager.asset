@@ -8,6 +8,8 @@ TagManager:
   - Bullet
   - Enemy
   - Supply
+  - Boss
+  - SpawnedEnemy
   layers:
   - Default
   - TransparentFX

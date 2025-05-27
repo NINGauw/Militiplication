@@ -2672,7 +2672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eec42345512f644988a7b98f96f13ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 6
 --- !u!143 &7454193987825026763
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2714,9 +2714,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4597289192330965671, guid: b0fe8117c5f7a2b44b14307a67778dc4,
     type: 3}
   firePoint: {fileID: 4236064168007353024}
-  bulletSpeed: 10
-  fireRate: 0.5
-  shootInterval: 1
+  bulletSpeed: 20
+  fireRate: 1.5
+  shootInterval: 1.5
 --- !u!1 &8325739658225178135
 GameObject:
   m_ObjectHideFlags: 0

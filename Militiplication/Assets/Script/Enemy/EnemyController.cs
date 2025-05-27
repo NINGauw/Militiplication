@@ -33,6 +33,11 @@ public class EnemyController : MonoBehaviour
             }
 
             GameManager.Instance.OnEnemyDefeated();
+            
+            if (EnemyManager.Instance != null)
+            {
+                EnemyManager.Instance.OnEnemyDefeated();
+            }
 
             Collider col = GetComponent<Collider>();
             if (col != null) col.enabled = false;

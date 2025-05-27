@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public int totalEnemies = 20;
+    public int totalBoss = 1;
     private int enemiesRemaining;
 
     public TextMeshProUGUI enemiesLeftText;
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        enemiesRemaining = totalEnemies;
+        enemiesRemaining = totalEnemies + totalBoss;
         UpdateEnemyCountUI();
     }
 
@@ -40,6 +41,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OnBossDefeated()
+    {
+        enemiesRemaining--;
+        UpdateEnemyCountUI();
+        if (enemiesRemaining <= 0)
+        {
+            Debug.Log("🎉 You Win!");
+            WinUIManager.Instance.TriggerWin();
+            CoinManager.Instance.AddCoins(5);
+        }
+    }
     private void UpdateEnemyCountUI()
     {
         enemiesLeftText.text = $"Enemies left: {enemiesRemaining}";

@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68275edbab8020546906428c05e807e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireRateFXPrefab: {fileID: 7491428297527928531, guid: e6d59e1d252eddd4c8e632529b1f0e30,
+    type: 3}
   availableRewards:
   - supplierName: AttackSpeed
     type: 0

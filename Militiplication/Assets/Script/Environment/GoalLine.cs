@@ -27,8 +27,29 @@ public class GoalLine : MonoBehaviour
 
             if (health <= 0)
             {
-                // Xử lý Game Over hoặc hiệu ứng
-                // Destroy(gameObject); // nếu muốn xóa vạch
+                Lose();
+            }
+        }
+        if (other.CompareTag("Boss"))
+        {
+            // Hủy quái
+            Destroy(other.gameObject);
+            GameManager.Instance.OnEnemyDefeated();
+            //Lose immediately
+            Lose();
+        }
+        if (other.CompareTag("SpawnedEnemy"))
+        {
+            // Giảm máu
+            health--;
+
+            // Hủy quái
+            Destroy(other.gameObject);
+            UpdateHealthUI();
+
+            if (health <= 0)
+            {
+                Lose();
             }
         }
     }
@@ -39,5 +60,8 @@ public class GoalLine : MonoBehaviour
         {
             healthText.text = "Goal HP: " + health;
         }
+    }
+    private void Lose() {
+        //xu ly khi thua
     }
 }
