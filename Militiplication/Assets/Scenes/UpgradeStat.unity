@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 271213752}
   - component: {fileID: 271213753}
   m_Layer: 0
-  m_Name: UpgradeStatManager
+  m_Name: UpgradeStatUIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -477,25 +477,14 @@ MonoBehaviour:
   moveSpeedValueText: {fileID: 1111204977}
   moveSpeedCostText: {fileID: 1214100733}
   moveSpeedUpgradeButton: {fileID: 328066011}
-  baseMoveSpeed: 6
-  moveSpeedIncrementPerLevel: 0.25
-  moveSpeedUpgradeCosts: 320000006400000096000000c8000000fa000000
-  moveSpeedMaxLevel: 6
   attackSpeedLevelText: {fileID: 1652101790}
   attackSpeedValueText: {fileID: 1943486266}
   attackSpeedCostText: {fileID: 2145725191}
   attackSpeedUpgradeButton: {fileID: 990865325}
-  baseAttackSpeed: 1.5
-  attackSpeedIncrementPerLevel: 0.2
-  attackSpeedUpgradeCosts: 320000006400000096000000c8000000fa000000
-  attackSpeedMaxLevel: 6
   supplyUpgradeLevelText: {fileID: 226967878}
   supplyUpgradeValueText: {fileID: 623402946}
   supplyUpgradeCostText: {fileID: 409484863}
   supplyUpgradeButton: {fileID: 500846463}
-  supplyHealthReductionPerLevel: 1
-  supplyUpgradeCosts: 320000006400000096000000c8000000fa000000
-  supplyUpgradeMaxLevel: 6
   backButton: {fileID: 252217252}
   menuSceneName: MenuScene
 --- !u!1 &328066009

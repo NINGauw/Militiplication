@@ -1,242 +1,190 @@
+// File: UpgradeManager.cs
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using UnityEngine.SceneManagement;
 
 public class UpgradeManager : MonoBehaviour
 {
-    public static UpgradeManager Instance;
+    public static UpgradeManager Instance { get; private set; }
 
-    [Header("Coin Display")]
-    public TextMeshProUGUI coinDisplayText;
-
-    [Header("Move Speed Upgrade")]
-    public TextMeshProUGUI moveSpeedLevelText;
-    public TextMeshProUGUI moveSpeedValueText;
-    public TextMeshProUGUI moveSpeedCostText;
-    public Button moveSpeedUpgradeButton;
+    // Các thông số cơ bản và gia tăng cho từng chỉ số
+    // Những giá trị này sẽ được thiết lập một lần trong Inspector của UpgradeManager ở MenuScene
+    [Header("Move Speed Config")]
     public float baseMoveSpeed = 6f;
-    public float moveSpeedIncrementPerLevel = 0.5f;
+    public float moveSpeedIncrementPerLevel = 0.25f;
     public int[] moveSpeedUpgradeCosts;
-    public int moveSpeedMaxLevel = 10;
+    public int moveSpeedMaxLevel = 5;
     private int currentMoveSpeedLevel;
 
-    [Header("Attack Speed Upgrade")]
-    public TextMeshProUGUI attackSpeedLevelText;
-    public TextMeshProUGUI attackSpeedValueText;
-    public TextMeshProUGUI attackSpeedCostText;
-    public Button attackSpeedUpgradeButton;
-    public float baseAttackSpeed = 1.5f;
+    [Header("Attack Speed Config")]
+    public float baseAttackSpeed = 1.5f; // Ví dụ: 1 phát/giây
     public float attackSpeedIncrementPerLevel = 0.2f;
     public int[] attackSpeedUpgradeCosts;
-    public int attackSpeedMaxLevel = 10;
+    public int attackSpeedMaxLevel = 5;
     private int currentAttackSpeedLevel;
 
-    [Header("Supply Health Reduction Upgrade")] // Đổi tên cho rõ nghĩa hơn
-    public TextMeshProUGUI supplyUpgradeLevelText;
-    public TextMeshProUGUI supplyUpgradeValueText;
-    public TextMeshProUGUI supplyUpgradeCostText;
-    public Button supplyUpgradeButton;
+    [Header("Supply Health Reduction Config")]
     public int supplyHealthReductionPerLevel = 1; // Mỗi cấp giảm 1 HP của Supply
     public int[] supplyUpgradeCosts;
-    public int supplyUpgradeMaxLevel = 5; // Ví dụ: giảm tối đa 5 HP
+    public int supplyUpgradeMaxLevel = 5;
     private int currentSupplyUpgradeLevel;
-
-    [Header("Navigation")]
-    public Button backButton;
-    public string menuSceneName = "MenuScene";
-
-    // private int playerCoins; // Xóa dòng này, sẽ dùng CoinManager
 
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // Quan trọng: Giữ lại khi chuyển scene
+            LoadUpgradeLevels(); // Tải dữ liệu nâng cấp ngay khi được tạo
+        }
         else if (Instance != this)
-            Destroy(gameObject);
+        {
+            Destroy(gameObject); // Hủy các bản sao
+        }
     }
 
-    void Start()
+    void LoadUpgradeLevels()
     {
-        LoadUpgradeLevels(); // Chỉ tải cấp độ nâng cấp, coin sẽ do CoinManager quản lý
-        UpdateAllUI();
-
-        moveSpeedUpgradeButton.onClick.AddListener(() => AttemptUpgrade("MoveSpeed"));
-        attackSpeedUpgradeButton.onClick.AddListener(() => AttemptUpgrade("AttackSpeed"));
-        supplyUpgradeButton.onClick.AddListener(() => AttemptUpgrade("Supply"));
-
-        if (backButton != null)
-            backButton.onClick.AddListener(GoToMenu);
-    }
-
-    void LoadUpgradeLevels() // Đổi tên từ LoadPlayerData
-    {
-        // playerCoins = PlayerPrefs.GetInt("PlayerCoins", 1000); // Xóa, CoinManager sẽ load
         currentMoveSpeedLevel = PlayerPrefs.GetInt("MoveSpeedLevel", 0);
         currentAttackSpeedLevel = PlayerPrefs.GetInt("AttackSpeedLevel", 0);
         currentSupplyUpgradeLevel = PlayerPrefs.GetInt("SupplyUpgradeLevel", 0);
+        Debug.Log("UpgradeManager: Dữ liệu cấp độ nâng cấp đã được tải.");
     }
 
-    void SaveUpgradeLevels() // Đổi tên từ SavePlayerData
+    void SaveUpgradeLevels()
     {
-        // PlayerPrefs.SetInt("PlayerCoins", playerCoins); // Xóa, CoinManager sẽ save
         PlayerPrefs.SetInt("MoveSpeedLevel", currentMoveSpeedLevel);
         PlayerPrefs.SetInt("AttackSpeedLevel", currentAttackSpeedLevel);
         PlayerPrefs.SetInt("SupplyUpgradeLevel", currentSupplyUpgradeLevel);
         PlayerPrefs.Save();
+        Debug.Log("UpgradeManager: Dữ liệu cấp độ nâng cấp đã được lưu.");
     }
 
-    void UpdateAllUI()
+    public int GetUpgradeCost(string statName)
     {
-        if (CoinManager.Instance != null)
-        {
-            coinDisplayText.text = $"{CoinManager.Instance.GetCoinAmount()}";
-        }
-        else
-        {
-            coinDisplayText.text = "N/A";
-            Debug.LogError("CoinManager.Instance is not available!");
-        }
-        
-        int currentCoins = (CoinManager.Instance != null) ? CoinManager.Instance.GetCoinAmount() : 0;
-
-        // Move Speed UI
-        moveSpeedLevelText.text = $"Level {currentMoveSpeedLevel}";
-        float actualMoveSpeed = baseMoveSpeed + currentMoveSpeedLevel * moveSpeedIncrementPerLevel;
-        moveSpeedValueText.text = $"Speed: {actualMoveSpeed:F1}";
-        if (currentMoveSpeedLevel < moveSpeedMaxLevel)
-        {
-            moveSpeedCostText.text = $"{GetCost(moveSpeedUpgradeCosts, currentMoveSpeedLevel)}";
-            moveSpeedUpgradeButton.interactable = currentCoins >= GetCost(moveSpeedUpgradeCosts, currentMoveSpeedLevel);
-        }
-        else
-        {
-            moveSpeedCostText.text = "Max";
-            moveSpeedUpgradeButton.interactable = false;
-        }
-
-        // Attack Speed UI
-        attackSpeedLevelText.text = $"Level {currentAttackSpeedLevel}";
-        float actualAttackSpeed = baseAttackSpeed - (currentAttackSpeedLevel * attackSpeedIncrementPerLevel);
-        attackSpeedValueText.text = $"Rate: {actualAttackSpeed:F1}";
-        if (currentAttackSpeedLevel < attackSpeedMaxLevel)
-        {
-            attackSpeedCostText.text = $"{GetCost(attackSpeedUpgradeCosts, currentAttackSpeedLevel)}";
-            attackSpeedUpgradeButton.interactable = currentCoins >= GetCost(attackSpeedUpgradeCosts, currentAttackSpeedLevel);
-        }
-        else
-        {
-            attackSpeedCostText.text = "Max";
-            attackSpeedUpgradeButton.interactable = false;
-        }
-
-        // Supply Upgrade UI
-        supplyUpgradeLevelText.text = $"Level {currentSupplyUpgradeLevel}";
-        int healthReduction = currentSupplyUpgradeLevel * supplyHealthReductionPerLevel;
-        supplyUpgradeValueText.text = $"Reduce: -{healthReduction}"; // Hiển thị lượng HP giảm
-        if (currentSupplyUpgradeLevel < supplyUpgradeMaxLevel)
-        {
-            supplyUpgradeCostText.text = $"{GetCost(supplyUpgradeCosts, currentSupplyUpgradeLevel)}";
-            supplyUpgradeButton.interactable = currentCoins >= GetCost(supplyUpgradeCosts, currentSupplyUpgradeLevel);
-        }
-        else
-        {
-            supplyUpgradeCostText.text = "Max";
-            supplyUpgradeButton.interactable = false;
-        }
-    }
-
-    int GetCost(int[] costsArray, int currentLevel)
-    {
-        if (currentLevel < costsArray.Length)
-        {
-            return costsArray[currentLevel];
-        }
-        return int.MaxValue;
-    }
-
-    public void AttemptUpgrade(string statName) // Đổi tên từ UpgradeStat
-    {
-        if (CoinManager.Instance == null)
-        {
-            Debug.LogError("CoinManager.Instance is not available! Cannot process upgrade.");
-            return;
-        }
-
-        int cost = 0;
-        bool canUpgrade = false;
+        int currentLevel = 0;
+        int[] costsArray = null;
 
         switch (statName)
         {
             case "MoveSpeed":
-                if (currentMoveSpeedLevel < moveSpeedMaxLevel)
-                {
-                    cost = GetCost(moveSpeedUpgradeCosts, currentMoveSpeedLevel);
-                    if (CoinManager.Instance.GetCoinAmount() >= cost)
-                    {
-                        currentMoveSpeedLevel++;
-                        canUpgrade = true;
-                    }
-                }
+                currentLevel = currentMoveSpeedLevel;
+                costsArray = moveSpeedUpgradeCosts;
                 break;
             case "AttackSpeed":
-                if (currentAttackSpeedLevel < attackSpeedMaxLevel)
-                {
-                    cost = GetCost(attackSpeedUpgradeCosts, currentAttackSpeedLevel);
-                    if (CoinManager.Instance.GetCoinAmount() >= cost)
-                    {
-                        currentAttackSpeedLevel++;
-                        canUpgrade = true;
-                    }
-                }
+                currentLevel = currentAttackSpeedLevel;
+                costsArray = attackSpeedUpgradeCosts;
                 break;
             case "Supply":
-                if (currentSupplyUpgradeLevel < supplyUpgradeMaxLevel)
-                {
-                    cost = GetCost(supplyUpgradeCosts, currentSupplyUpgradeLevel);
-                    if (CoinManager.Instance.GetCoinAmount() >= cost)
-                    {
-                        currentSupplyUpgradeLevel++;
-                        canUpgrade = true;
-                    }
-                }
+                currentLevel = currentSupplyUpgradeLevel;
+                costsArray = supplyUpgradeCosts;
                 break;
             default:
-                Debug.LogWarning("Unknown stat name: " + statName);
-                return;
+                return int.MaxValue;
         }
 
-        if (canUpgrade)
+        if (costsArray == null || currentLevel >= costsArray.Length)
         {
-            CoinManager.Instance.SpendCoins(cost); // Trừ tiền thông qua CoinManager
-            SaveUpgradeLevels(); // Lưu cấp độ mới
-            UpdateAllUI();      // Cập nhật lại toàn bộ UI
-            Debug.Log($"Nâng cấp {statName} thành công! Cấp mới: { (statName == "MoveSpeed" ? currentMoveSpeedLevel : (statName == "AttackSpeed" ? currentAttackSpeedLevel : currentSupplyUpgradeLevel)) }");
+            return int.MaxValue; // Đã max hoặc không có chi phí định nghĩa
+        }
+        return costsArray[currentLevel];
+    }
+
+    public bool AttemptUpgrade(string statName)
+    {
+        if (CoinManager.Instance == null)
+        {
+            Debug.LogError("CoinManager.Instance không tồn tại! Không thể nâng cấp.");
+            return false;
+        }
+
+        int cost = GetUpgradeCost(statName);
+        int currentLevel = GetStatLevel(statName);
+        int maxLevel = GetStatMaxLevel(statName);
+
+        if (currentLevel >= maxLevel)
+        {
+            Debug.Log($"Chỉ số {statName} đã đạt cấp tối đa.");
+            return false;
+        }
+
+        if (CoinManager.Instance.GetCoinAmount() >= cost)
+        {
+            if (CoinManager.Instance.SpendCoins(cost))
+            {
+                switch (statName)
+                {
+                    case "MoveSpeed": currentMoveSpeedLevel++; break;
+                    case "AttackSpeed": currentAttackSpeedLevel++; break;
+                    case "Supply": currentSupplyUpgradeLevel++; break;
+                    default: return false; // Không nên xảy ra
+                }
+                SaveUpgradeLevels();
+                Debug.Log($"Nâng cấp {statName} thành công! Cấp mới: {GetStatLevel(statName)}");
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning($"SpendCoins cho {statName} thất bại dù đã kiểm tra đủ coin.");
+                return false;
+            }
         }
         else
         {
-            Debug.Log($"Không thể nâng cấp {statName}. Đã đạt cấp tối đa hoặc không đủ coin.");
-            // (Tùy chọn) Hiển thị thông báo cho người chơi là không đủ tiền hoặc đã max level
+            Debug.Log($"Không đủ coin để nâng cấp {statName}. Cần: {cost}, Hiện có: {CoinManager.Instance.GetCoinAmount()}");
+            return false;
         }
     }
 
-    void GoToMenu()
+    // Các hàm Getter cho UpgradeSceneUIController
+    public int GetStatLevel(string statName)
     {
-        SceneManager.LoadScene(menuSceneName);
+        switch (statName)
+        {
+            case "MoveSpeed": return currentMoveSpeedLevel;
+            case "AttackSpeed": return currentAttackSpeedLevel;
+            case "Supply": return currentSupplyUpgradeLevel;
+            default: return -1;
+        }
     }
 
-    // Các hàm static để script khác lấy giá trị stat đã nâng cấp
-    public static float GetCurrentMoveSpeedValue() { // Đổi tên cho rõ là lấy "Value"
-        if (Instance == null) { Debug.LogWarning("UpgradeManager.Instance is null, returning base move speed."); return 5f; } // Giá trị mặc định an toàn
+    public int GetStatMaxLevel(string statName)
+    {
+        switch (statName)
+        {
+            case "MoveSpeed": return moveSpeedMaxLevel;
+            case "AttackSpeed": return attackSpeedMaxLevel;
+            case "Supply": return supplyUpgradeMaxLevel;
+            default: return -1;
+        }
+    }
+    
+    public float GetCalculatedStatValue(string statName)
+    {
+        switch (statName)
+        {
+            case "MoveSpeed": return baseMoveSpeed + currentMoveSpeedLevel * moveSpeedIncrementPerLevel;
+            case "AttackSpeed": return baseAttackSpeed - currentAttackSpeedLevel * attackSpeedIncrementPerLevel;
+            case "Supply": return supplyHealthReductionPerLevel * currentSupplyUpgradeLevel; // Đây là lượng giảm HP
+            default: return -1f;
+        }
+    }
+
+
+    // Các hàm static để script trong màn chơi (PlayerController, SupplyHealth) có thể lấy giá trị cuối cùng
+    public static float GetCurrentMoveSpeedValue()
+    {
+        if (Instance == null) { Debug.LogWarning("UpgradeManager.Instance is null. Trả về giá trị MoveSpeed cơ bản."); return 5f; } // Giá trị mặc định an toàn
         return Instance.baseMoveSpeed + Instance.currentMoveSpeedLevel * Instance.moveSpeedIncrementPerLevel;
     }
-    public static float GetCurrentAttackSpeedValue() { // Đổi tên
-        if (Instance == null) { Debug.LogWarning("UpgradeManager.Instance is null, returning base attack speed."); return 1f; }
-        return Instance.baseAttackSpeed + Instance.currentAttackSpeedLevel * Instance.attackSpeedIncrementPerLevel;
+
+    public static float GetCurrentAttackSpeedValue()
+    {
+        if (Instance == null) { Debug.LogWarning("UpgradeManager.Instance is null. Trả về giá trị AttackSpeed cơ bản."); return 1f; }
+        return Instance.baseAttackSpeed - Instance.currentAttackSpeedLevel * Instance.attackSpeedIncrementPerLevel;
     }
-    // Hàm này sẽ trả về tổng số HP bị giảm cho Supply
-    public static int GetCurrentSupplyHealthReduction() {
-        if (Instance == null) { Debug.LogWarning("UpgradeManager.Instance is null, returning 0 supply health reduction."); return 0; }
+
+    public static int GetCurrentSupplyHealthReduction()
+    {
+        if (Instance == null) { Debug.LogWarning("UpgradeManager.Instance is null. Trả về giá trị SupplyHealthReduction là 0."); return 0; }
         return Instance.currentSupplyUpgradeLevel * Instance.supplyHealthReductionPerLevel;
     }
 }

@@ -692,6 +692,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796894958}
   m_CullTransparentMesh: 1
+--- !u!1 &893868287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 893868289}
+  - component: {fileID: 893868288}
+  m_Layer: 0
+  m_Name: UpgradeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &893868288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893868287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32a20b46480b1f41bba7b2c2d20eaf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseMoveSpeed: 6
+  moveSpeedIncrementPerLevel: 0.25
+  moveSpeedUpgradeCosts: 320000006400000096000000c8000000fa000000
+  moveSpeedMaxLevel: 5
+  baseAttackSpeed: 1.5
+  attackSpeedIncrementPerLevel: 0.2
+  attackSpeedUpgradeCosts: 320000006400000096000000c8000000fa000000
+  attackSpeedMaxLevel: 5
+  supplyHealthReductionPerLevel: 1
+  supplyUpgradeCosts: 320000006400000096000000c8000000fa000000
+  supplyUpgradeMaxLevel: 5
+--- !u!4 &893868289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893868287}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 463.4402, y: 233.48776, z: -172.3821}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1013370513
 GameObject:
   m_ObjectHideFlags: 0
@@ -1996,3 +2051,4 @@ SceneRoots:
   - {fileID: 725146052}
   - {fileID: 1548955135}
   - {fileID: 473109193}
+  - {fileID: 893868289}
