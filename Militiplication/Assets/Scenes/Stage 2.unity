@@ -592,7 +592,7 @@ MonoBehaviour:
   bossPrefab: {fileID: 4946398668805289935, guid: 1e7fa970f0d84ef4faf6b968e0d4dd29,
     type: 3}
   bossSpawnPoint: {fileID: 252662284}
-  enemiesToSpawnBoss: 10
+  enemiesToSpawnBoss: 12
   bossHealthBarUI: {fileID: 1716898342}
 --- !u!4 &252662284
 Transform:
@@ -995,7 +995,7 @@ PrefabInstance:
     - target: {fileID: 6377307692059798248, guid: c916444ed8e01df469c8b0a404969800,
         type: 3}
       propertyPath: enemiesToSpawnList.Array.data[0].quantityToSpawn
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6887218248182038646, guid: c916444ed8e01df469c8b0a404969800,
         type: 3}

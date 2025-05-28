@@ -3,7 +3,7 @@ using TMPro;
 
 public class SupplyHealth : MonoBehaviour
 {
-    public int maxHealth = 20;
+    public int maxHealth = 12;
     public GameObject destroyFXPrefab;
     public Transform locationFX;
     private int currentHealth;
@@ -14,6 +14,7 @@ public class SupplyHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         UpdateHealthText();
+        maxHealth -= UpgradeManager.GetCurrentSupplyHealthReduction();
     }
 
     void UpdateHealthText()

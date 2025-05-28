@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ public class UIManager : MonoBehaviour
     public Button startGameButton;
     public Button settingButton;
     public Button shopButton;
+    public Button upgradeStat;
+    public Button supply;
 
     private void Start()
     {
@@ -17,9 +20,21 @@ public class UIManager : MonoBehaviour
         startGameButton.onClick.AddListener(OnStartGameClicked);
         settingButton.onClick.AddListener(OnSettingClicked);
         shopButton.onClick.AddListener(OnBackClicked);
+        upgradeStat.onClick.AddListener(OnUpgradeStatClicked);
+        supply.onClick.AddListener(OnSupplyClicked);
 
         // Mặc định hiển thị main menu
         ShowMainMenu();
+    }
+
+    private void OnSupplyClicked()
+    {
+        SceneManager.LoadScene("Supply");
+    }
+
+    private void OnUpgradeStatClicked()
+    {
+        SceneManager.LoadScene("UpgradeStat");
     }
 
     void OnStartGameClicked()

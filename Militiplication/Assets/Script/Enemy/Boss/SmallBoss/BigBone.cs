@@ -152,7 +152,6 @@ public class BigBone : MonoBehaviour
     void Die()
     {
         isDead = true;
-        Debug.Log("BigBone is dying.", this);
 
         if (animator != null)
         {

@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
         {
             animator.SetTrigger("Death"); // Đảm bảo có trigger "Death" trong Animator Controller của Boss
         }
-            GameManager.Instance.OnEnemyDefeated();
+        GameManager.Instance.OnEnemyDefeated();
 
         if (EnemyManager.Instance != null)
         {

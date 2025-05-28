@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelSelectScene.unity
     guid: 20899370dfb4ced42bd1eec728ec94f8
   - enabled: 1
+    path: Assets/Scenes/Supply.unity
+    guid: b0ba3d3d4159cb34bbfbe7e58a99f488
+  - enabled: 1
+    path: Assets/Scenes/UpgradeStat.unity
+    guid: db68b76e867bab04ca16159c8ee3f58e
+  - enabled: 1
     path: Assets/Scenes/Stage 1.unity
     guid: c850ee8c3b14cc8459e7e186857cf567
   - enabled: 1

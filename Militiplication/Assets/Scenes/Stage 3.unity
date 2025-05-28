@@ -606,7 +606,7 @@ MonoBehaviour:
   bossPrefab: {fileID: 4946398668805289935, guid: 1e7fa970f0d84ef4faf6b968e0d4dd29,
     type: 3}
   bossSpawnPoint: {fileID: 252662284}
-  enemiesToSpawnBoss: 2
+  enemiesToSpawnBoss: 3
   bossHealthBarUI: {fileID: 1716898342}
 --- !u!4 &252662284
 Transform:
@@ -869,6 +869,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6377307692059798248, guid: c916444ed8e01df469c8b0a404969800,
         type: 3}
+      propertyPath: spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377307692059798248, guid: c916444ed8e01df469c8b0a404969800,
+        type: 3}
       propertyPath: enemiesToSpawnList.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -887,7 +892,7 @@ PrefabInstance:
     - target: {fileID: 6377307692059798248, guid: c916444ed8e01df469c8b0a404969800,
         type: 3}
       propertyPath: enemiesToSpawnList.Array.data[0].quantityToSpawn
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6377307692059798248, guid: c916444ed8e01df469c8b0a404969800,
         type: 3}
@@ -1056,7 +1061,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.5320754, g: 0.4273856, b: 0.14355995, a: 1}
+  m_Color: {r: 0.5698112, g: 0.48189577, b: 0.24835166, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -2275,12 +2280,12 @@ PrefabInstance:
     - target: {fileID: 3085719494710840060, guid: 053697ce10cfe384f9150b6d8211c020,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -128.8
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 3085719494710840060, guid: 053697ce10cfe384f9150b6d8211c020,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 38.7
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: 3085719494710840060, guid: 053697ce10cfe384f9150b6d8211c020,
         type: 3}

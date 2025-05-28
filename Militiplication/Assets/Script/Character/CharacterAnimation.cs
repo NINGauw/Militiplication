@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;
     private Animator animator;
     private CharacterController controller;
 
@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+        moveSpeed = UpgradeManager.GetCurrentMoveSpeedValue();
     }
 
     void Update()
