@@ -45,7 +45,7 @@ public class SupplierManager : MonoBehaviour
         switch (reward.type)
         {
             case SupplierType.FireRateBoost:
-                ApplyFireRateBoost(player, 2f, 10f); // Có thể dùng reward.value nếu cần tùy chỉnh
+                ApplyFireRateBoost(player, 2f, 20f); // Có thể dùng reward.value nếu cần tùy chỉnh
                 break;
 
             // Thêm các case khác nếu có

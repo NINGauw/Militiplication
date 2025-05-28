@@ -4,6 +4,8 @@ using TMPro;
 public class SupplyHealth : MonoBehaviour
 {
     public int maxHealth = 20;
+    public GameObject destroyFXPrefab;
+    public Transform locationFX;
     private int currentHealth;
 
     public TextMeshPro healthText; // Gắn UI text hiển thị máu vào đây
@@ -40,8 +42,13 @@ public class SupplyHealth : MonoBehaviour
         }
     }
 
-    private void ActiveSupply(){
+    private void ActiveSupply()
+    {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         SupplierManager.Instance.ActivateSelectedReward(player);
+        if (destroyFXPrefab != null)
+        {
+            Instantiate(destroyFXPrefab, locationFX.position, Quaternion.identity);
+        }
     }
 }
