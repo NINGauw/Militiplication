@@ -126,7 +126,7 @@ public class UpgradeSceneUIController : MonoBehaviour
         int supCost = UpgradeManager.Instance.GetUpgradeCost("Supply");
 
         if (supplyUpgradeLevelText != null) supplyUpgradeLevelText.text = $"Level {supLevel}";
-        if (supplyUpgradeValueText != null) supplyUpgradeValueText.text = $"Supply HP: -{supValueReduction:F0}";
+        if (supplyUpgradeValueText != null) supplyUpgradeValueText.text = $"Reduce: {supValueReduction:F0}HP";
         if (supLevel < supMaxLevel)
         {
             if (supplyUpgradeCostText != null) supplyUpgradeCostText.text = $"{supCost}";

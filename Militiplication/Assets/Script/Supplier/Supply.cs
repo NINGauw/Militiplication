@@ -12,9 +12,9 @@ public class SupplyHealth : MonoBehaviour
 
     void Start()
     {
+        maxHealth -= UpgradeManager.GetCurrentSupplyHealthReduction();
         currentHealth = maxHealth;
         UpdateHealthText();
-        maxHealth -= UpgradeManager.GetCurrentSupplyHealthReduction();
     }
 
     void UpdateHealthText()
